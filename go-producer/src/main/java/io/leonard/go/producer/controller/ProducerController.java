@@ -1,23 +1,28 @@
 package io.leonard.go.producer.controller;
 
-import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import io.leonard.go.common.pojo.CommonReturnType;
-import io.leonard.go.common.pojo.DevMachine;
+import io.leonard.go.producer.service.DevMachineService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import java.net.InetAddress;
-import java.util.Random;
 
+@RefreshScope
 @RestController
 @RequestMapping("producer")
 public class ProducerController {
 
-    @Resource
-    private NacosDiscoveryProperties nacosDiscoveryProperties;
+
+    @Value("${producer.env:null}")
+    private String env;
+
+    @Autowired
+    private DevMachineService devMachineService;
 
 
     @GetMapping("/health")
@@ -25,19 +30,20 @@ public class ProducerController {
         StringBuilder sb = new StringBuilder();
         sb.append(" go-producer is health.");
         sb.append(" IP: " + InetAddress.getLocalHost().getHostAddress());
-        sb.append(" Zone: " + nacosDiscoveryProperties.getMetadata().get("zone"));
+        sb.append(" env: " + env);
         return CommonReturnType.create(sb.toString());
     }
 
     @GetMapping("/createMachine/{prefix}")
     public CommonReturnType createMachine(@PathVariable("prefix") String prefix) throws Exception {
-        DevMachine devMachine = new DevMachine();
-        devMachine.setMachineId(prefix + "" + new Random().nextInt(10000));
-        devMachine.setMachineName("大挖"+prefix+new Random().nextInt(100));
-        devMachine.setMachineType("挖掘机");
-        devMachine.setDescription("挖掘机666");
-        return CommonReturnType.create(devMachine);
+        return devMachineService.createMachine(prefix);
     }
+
+    @GetMapping("/updateMachine/{machineId}")
+    public CommonReturnType updateMachine(@PathVariable("machineId") String machineId) throws Exception {
+        return devMachineService.updateMachine(machineId);
+    }
+
 
 
 }
