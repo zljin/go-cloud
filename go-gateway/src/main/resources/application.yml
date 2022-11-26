@@ -4,6 +4,15 @@ server:
 spring:
   application:
     name: go-gateway
+  zipkin:
+    base-url: http://192.168.2.6:9411/
+    discovery-client-enabled: false
+    sender:
+      type: web
+  #采样取值介于 0到1之间，1则表示全部收集
+  sleuth:
+    sampler:
+      probability: 1
   cloud:
     nacos:
       discovery:

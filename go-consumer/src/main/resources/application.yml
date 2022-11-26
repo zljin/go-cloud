@@ -22,6 +22,15 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+  zipkin:
+    base-url: http://192.168.2.6:9411/
+    # 关闭服务发现，否则 Spring Cloud 会把 zipkin 的 url 当做服务名称
+    discovery-client-enabled: false
+    sender:
+      type: web # 设置使用 http 的方式传输数据
+  sleuth:
+    sampler:
+      probability: 1 # 设置抽样采集率为 100%，默认为 0.1
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
