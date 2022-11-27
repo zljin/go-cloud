@@ -9,7 +9,7 @@ spring:
     discovery-client-enabled: false
     sender:
       type: web
-  #采样取值介于 0到1之间，1则表示全部收集
+#采样取值介于 0到1之间，1则表示全部收集
   sleuth:
     sampler:
       probability: 1
@@ -32,6 +32,7 @@ spring:
             - Path=/api/consumer/**
           filters:
             - RewritePath=/api/(?<segment>/?.*), /$\{segment}
+
 
 # localhost:8000/api/producer/health -> localhost:8001/producer/health
 # 一个请求满足多个路由的谓词条件时，请求只会被首个成功匹配的路由转发
