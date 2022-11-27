@@ -22,6 +22,12 @@
             <groupId>io.leonard</groupId>
             <artifactId>go-common</artifactId>
             <version>1.0-RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.alibaba.cloud</groupId>
+                    <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>

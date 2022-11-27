@@ -8,6 +8,7 @@ import io.leonard.go.consumer.dao.SaleRecordDao;
 import io.leonard.go.consumer.entity.SaleRecordEntity;
 import io.leonard.go.consumer.feign.ProducerFeignService;
 import io.leonard.go.consumer.service.SaleRecordService;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ public class SaleRecordServiceImpl extends ServiceImpl<SaleRecordDao, SaleRecord
     @Resource
     private SaleRecordDao saleRecordDao;
 
+    @GlobalTransactional
     @Override
     public CommonReturnType sellMachine(String preFix) throws Exception {
         CommonReturnType returnType = producerFeignService.createMachine(preFix);
@@ -36,6 +38,8 @@ public class SaleRecordServiceImpl extends ServiceImpl<SaleRecordDao, SaleRecord
         saleRecordDao.insert(saleRecordEntity);
 
         producerFeignService.updateMachine(machine.getMachineId());
+
+        //int i = 10/0;//测试分布式事务
         return CommonReturnType.create(machine.getMachineId() + "销售成功");
     }
 }

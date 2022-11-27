@@ -8,6 +8,7 @@ import io.leonard.go.producer.entity.DevMachineEntity;
 import io.leonard.go.producer.service.DevMachineService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Random;
@@ -19,6 +20,7 @@ public class DevMachineServiceImpl extends ServiceImpl<DevMachineDao, DevMachine
     @Resource
     private DevMachineDao devMachineDao;
 
+    @Transactional
     @Override
     public CommonReturnType createMachine(String prefix) {
         DevMachine devMachine = new DevMachine();
@@ -29,11 +31,13 @@ public class DevMachineServiceImpl extends ServiceImpl<DevMachineDao, DevMachine
 
         DevMachineEntity devMachineEntity = new DevMachineEntity();
         BeanUtils.copyProperties(devMachine,devMachineEntity);
+        devMachineEntity.setSaleStatus(0);
 
         devMachineDao.insert(devMachineEntity);
         return CommonReturnType.create(devMachine);
     }
 
+    @Transactional
     @Override
     public CommonReturnType updateMachine(String machineId) {
         devMachineDao.updateDevMachineStatus(machineId);
