@@ -8,11 +8,12 @@ import org.springframework.stereotype.Service;
 public class ProducerFallBackService implements ProducerFeignService {
     @Override
     public CommonReturnType createMachine(String prefix) throws Exception {
-        return CommonReturnType.create("error create machine");
+        System.out.println("createMachine quick fail");
+        return null;
     }
 
     @Override
     public CommonReturnType updateMachine(String machineId) throws Exception {
-        return CommonReturnType.create("error update machine");
+        throw new RuntimeException("updateMachine quick fail");
     }
 }

@@ -31,6 +31,9 @@ public class SaleRecordServiceImpl extends ServiceImpl<SaleRecordDao, SaleRecord
     @Override
     public CommonReturnType sellMachine(String preFix) throws Exception {
         CommonReturnType returnType = producerFeignService.createMachine(preFix);
+        if(null == returnType){
+            throw new RuntimeException("createMachine quick fail");
+        }
         Map data = (Map) returnType.getData();
         DevMachine machine = BeanUtil.fillBeanWithMap(data, new DevMachine(), false);
         SaleRecordEntity saleRecordEntity = new SaleRecordEntity();

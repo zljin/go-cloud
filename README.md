@@ -117,5 +117,12 @@ Seata AT模式步骤如下：
     4.2 小事务入口标注@Transactional
 ```
 
+## Sentinel 服务容错（限流、降级、熔断）
+> https://github.com/alibaba/Sentinel/wiki/%E4%BB%8B%E7%BB%8D
+
+> https://github.com/alibaba/Sentinel/wiki/%E4%B8%BB%E9%A1%B5
+
+> https://github.com/alibaba/spring-cloud-alibaba/blob/2.2.x/spring-cloud-alibaba-examples/sentinel-example/sentinel-feign-example/readme-zh.md
+
 
 

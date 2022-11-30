@@ -1,13 +1,13 @@
 package io.leonard.go.consumer.feign;
 
 import io.leonard.go.common.pojo.CommonReturnType;
+import io.leonard.go.consumer.feign.fallback.ProducerFallBackService;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
-@FeignClient("go-producer")
+@FeignClient(value = "go-producer",fallback = ProducerFallBackService.class)
 public interface ProducerFeignService {
 
     @RequestMapping("producer/createMachine/{prefix}")
