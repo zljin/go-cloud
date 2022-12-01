@@ -2,6 +2,7 @@ package io.leonard.go.consumer.controller;
 
 import io.leonard.go.common.pojo.CommonReturnType;
 import io.leonard.go.consumer.service.SaleRecordService;
+import io.leonard.go.consumer.service.TestSentienlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,9 @@ public class ConsumerController {
     @Autowired
     private SaleRecordService saleRecordService;
 
+    @Autowired
+    private TestSentienlService testSentienlService;
+
     @GetMapping("/health")
     public CommonReturnType health() throws Exception {
         StringBuilder sb = new StringBuilder();
@@ -31,6 +35,11 @@ public class ConsumerController {
     public CommonReturnType sellMachine() throws Exception {
         String todayDatePrefix = new SimpleDateFormat("yyyyMMdd").format(new Date());
         return saleRecordService.sellMachine(todayDatePrefix);
+    }
+
+    @GetMapping("/sayHi")
+    public CommonReturnType sayHi() throws Exception {
+        return testSentienlService.sayHi();
     }
 
 }

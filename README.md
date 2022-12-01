@@ -60,7 +60,11 @@ gateway:
           - Path=/api/consumer/**
         filters:
           - RewritePath=/api/(?<segment>/?.*), /$\{segment}
+# localhost:8000/api/producer/health -> localhost:8001/producer/health
+# 一个请求满足多个路由的谓词条件时，请求只会被首个成功匹配的路由转发
+# 各种 Predicates 同时存在于同一个路由时，请求必须同时满足所有的条件才被这个路 由匹配
 ```
+
 
 ### Gateway核心概念
 1. 路由：路由信息由一个自定义Id，一个目的URL，一组断言和过滤器组成
@@ -118,11 +122,6 @@ Seata AT模式步骤如下：
 ```
 
 ## Sentinel 服务容错（限流、降级、熔断）
-> https://github.com/alibaba/Sentinel/wiki/%E4%BB%8B%E7%BB%8D
+> https://github.com/alibaba/spring-cloud-alibaba/wiki/Sentinel
 
-> https://github.com/alibaba/Sentinel/wiki/%E4%B8%BB%E9%A1%B5
-
-> https://github.com/alibaba/spring-cloud-alibaba/blob/2.2.x/spring-cloud-alibaba-examples/sentinel-example/sentinel-feign-example/readme-zh.md
-
-
-
+> https://github.com/alibaba/Sentinel/wiki/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8#%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6%E8%A7%84%E5%88%99-flowrule
